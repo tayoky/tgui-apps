@@ -5,6 +5,10 @@
 tgui_text_t *label;
 int syntax_error;
 
+void close_window(void) {
+	tgui_quit();
+}
+
 long parse_value(const char **ptr) {
 	char *end;
 	long value = strtol(*ptr, &end, 10);
@@ -72,7 +76,6 @@ long calculate1(const char **_ptr) {
 }
 
 void button_click(tobject_t *tobject) {
-	puts("click");
 	tgui_button_t *button = TGUI_BUTTON_CAST(tobject);
 	tgui_text_insert(label, tgui_button_get_text(button));
 }
@@ -109,6 +112,7 @@ int main() {
 	}
 
 	tgui_window_t *window = tgui_window_new("tgui calculator", 200, 200);
+	tgui_widget_connect_signal(TGUI_WIDGET_CAST(window), "destroy", TCALLBACK_CAST(close_window), NULL);
 
 	label = tgui_text_new();
 	tgui_widget_set_hexpand(TGUI_WIDGET_CAST(label), TGUI_TRUE);

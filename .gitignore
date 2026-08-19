@@ -1,0 +1,5 @@
+# build dir
+build
+
+# config file
+config.mk
